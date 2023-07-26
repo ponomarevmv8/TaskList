@@ -1,8 +1,11 @@
 package ru.petproject.taskList.service;
 
+import ru.petproject.taskList.dto.auth.JwtRequest;
+import ru.petproject.taskList.dto.auth.JwtResponse;
+
 public interface AuthService {
 
-    JwtResponce login(JwtResponce loginRequest);
+    JwtResponse login(JwtRequest loginRequest);
 
-    JwtResponce refresh(String refreshToken);
+    JwtResponse refresh(String refreshToken);
 }
