@@ -1,5 +1,7 @@
 package ru.petproject.taskList.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "User controller", description = "User API")
 public class UserController {
 
     private  final UserService userService;
@@ -28,6 +31,7 @@ public class UserController {
     private final TaskMapper taskMapper;
 
     @PutMapping
+    @Operation(summary = "Update user")
     public UserDto update(@Validated(OnUpdate.class) @RequestBody UserDto userDto){
         User user = userMapper.UserDtoToEntity(userDto);
         User updateUser = userService.update(user);
@@ -36,23 +40,27 @@ public class UserController {
 
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get userDto by id")
     public UserDto getById(@PathVariable Long id){
         User user = userService.getById(id);
         return userMapper.UserToDto(user);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete userDto by id")
     public void deleteById(@PathVariable Long id) {
         userService.delete(id);
     }
 
     @GetMapping("/{id}/tasks")
+    @Operation(summary = "Get all tasks by user id")
     public List<TaskDto> getTasksByUserId(@PathVariable Long id){
         List<Task> tasks = taskService.getAllByUserId(id);
         return taskMapper.taskToDto(tasks);
     }
 
     @PostMapping("/{id}/tasks")
+    @Operation(summary = "Create task for user")
     public TaskDto createTask(@PathVariable Long id,
                               @Validated(OnCreate.class) @RequestBody TaskDto taskDto) {
         Task task = taskMapper.taskDtoToEntity(taskDto);

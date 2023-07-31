@@ -6,9 +6,13 @@ spring:
     driver-class-name: org.postgresql.Driver
   sql:
     init:
-      mode: always
+      mode: never
       continue-on-error: false
 #      data-locations: classpath:demo_data.sql
+  liquibase:
+    change-log: classpath:liquibase/db.changelog.yaml
+    enabled: true
+    default-schema: tasklist
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
@@ -19,3 +23,6 @@ security:
     secret: ZmluYWxscHJvamVjdHBldGZvcnRhc2tsaXN0SVRJU0ZJUlNUTVlwZXRwcm9qZWN0
     access: 3600000
     refresh: 2592000000
+
+springdoc:
+  override-with-generic-response: false
