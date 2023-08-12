@@ -8,10 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ru.petproject.taskList.dto.validation.OnCreate;
 import ru.petproject.taskList.dto.validation.OnUpdate;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class Task {
+public class Task implements Serializable {
 
     @NotNull(message = "Id must be not null", groups = OnUpdate.class)
     private Long id;

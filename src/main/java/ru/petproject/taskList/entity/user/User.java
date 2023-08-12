@@ -3,12 +3,13 @@ package ru.petproject.taskList.entity.user;
 import lombok.Data;
 import ru.petproject.taskList.entity.task.Task;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
 @Data
 
-public class User {
+public class User implements Serializable {
 
     private Long id;
     private String name;

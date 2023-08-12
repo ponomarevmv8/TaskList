@@ -13,7 +13,7 @@
     </resultMap>
 
 
-    <select id="findByID" resultMap="TaskResultMap">
+    <select id="findById" resultMap="TaskResultMap">
         select t.id as task_id,
         t.title as task_title,
         t.description as task_description,
