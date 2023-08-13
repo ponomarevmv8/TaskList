@@ -30,7 +30,7 @@ public class AdviceController {
 
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionBody handleIllegalState(IllegalStateException e){
+    public ExceptionBody handleIllegalState(IllegalStateException e) {
         return new ExceptionBody(e.getMessage());
     }
 
@@ -51,7 +51,7 @@ public class AdviceController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionBody handleConstrainViolation(ConstraintViolationException e){
+    public ExceptionBody handleConstrainViolation(ConstraintViolationException e) {
         ExceptionBody exceptionBody = new ExceptionBody("Validation failed");
         exceptionBody.setErrors(e.getConstraintViolations().stream()
                 .collect(Collectors.toMap(
@@ -63,13 +63,13 @@ public class AdviceController {
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionBody handleAuthentication(AuthenticationException e){
+    public ExceptionBody handleAuthentication(AuthenticationException e) {
         return new ExceptionBody("Authentication failed");
     }
 
     @ExceptionHandler(ImageUploadException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionBody hendleImageUpload(ImageUploadException e){
+    public ExceptionBody hendleImageUpload(ImageUploadException e) {
         return new ExceptionBody(e.getMessage());
     }
 

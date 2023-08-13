@@ -5,5 +5,5 @@ import ru.petproject.taskList.dto.task.TaskImageDto;
 import ru.petproject.taskList.entity.task.TaskImage;
 
 @Mapper(componentModel = "spring")
-public interface TaskImageMapper extends Mappable<TaskImage, TaskImageDto>{
+public interface TaskImageMapper extends Mappable<TaskImage, TaskImageDto> {
 }

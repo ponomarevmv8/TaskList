@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import ru.petproject.taskList.entity.user.Role;
 import ru.petproject.taskList.security.JwtEntity;
 import ru.petproject.taskList.service.UserService;
-
-import java.util.function.Supplier;
 
 @Setter
 @Getter
@@ -31,7 +28,7 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
         super(authentication);
     }
 
-    public boolean canAccessUser(Long id){
+    public boolean canAccessUser(Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JwtEntity user = (JwtEntity) authentication.getPrincipal();
         Long userId = user.getId();
@@ -39,9 +36,9 @@ public class CustomMethodSecurityExpressionRoot extends SecurityExpressionRoot i
     }
 
     private boolean hasAnyRole(Authentication authentication, Role... roles) {
-        for (Role role: roles) {
+        for (Role role : roles) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-            if(authentication.getAuthorities().contains(authority)){
+            if (authentication.getAuthorities().contains(authority)) {
                 return true;
             }
         }

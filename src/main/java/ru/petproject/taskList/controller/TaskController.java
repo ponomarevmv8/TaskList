@@ -29,7 +29,7 @@ public class TaskController {
     @GetMapping("/{id}")
     @Operation(summary = "Get task by id")
     @PreAuthorize("canAccessTask(#id)")
-    public TaskDto getById(@PathVariable Long id){
+    public TaskDto getById(@PathVariable Long id) {
         Task task = taskService.getById(id);
         return taskMapper.toDto(task);
     }
@@ -37,7 +37,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete task by id")
     @PreAuthorize("canAccessTask(#id)")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@PathVariable Long id) {
         taskService.delete(id);
     }
 
@@ -47,14 +47,14 @@ public class TaskController {
     public TaskDto update(@Validated(OnUpdate.class) @RequestBody TaskDto taskDto) {
         Task task = taskMapper.toEntity(taskDto);
         Task updateTask = taskService.update(task);
-        return  taskMapper.toDto(updateTask);
+        return taskMapper.toDto(updateTask);
     }
 
     @PostMapping("/{id}/image")
     @Operation(summary = "Upload image to task")
     @PreAuthorize("canAccessTask(#id)")
     public void uploadImage(@PathVariable Long id,
-                            @Validated @ModelAttribute TaskImageDto imageDto){
+                            @Validated @ModelAttribute TaskImageDto imageDto) {
         TaskImage image = taskImageMapper.toEntity(imageDto);
         taskService.uploadImage(id, image);
     }

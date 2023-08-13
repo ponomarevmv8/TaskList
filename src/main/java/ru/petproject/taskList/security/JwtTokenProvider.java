@@ -6,12 +6,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.petproject.taskList.dto.auth.JwtResponse;
 import ru.petproject.taskList.entity.user.Role;
@@ -108,7 +106,7 @@ public class JwtTokenProvider {
                 .toString();
     }
 
-    private String getUsername(String token){
+    private String getUsername(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(key)
@@ -119,10 +117,10 @@ public class JwtTokenProvider {
     }
 
 
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String token) {
         String username = getUsername(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        return new UsernamePasswordAuthenticationToken(userDetails, "",  userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
 

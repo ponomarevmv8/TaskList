@@ -26,7 +26,7 @@ import java.util.List;
 @Tag(name = "User controller", description = "User API")
 public class UserController {
 
-    private  final UserService userService;
+    private final UserService userService;
     private final TaskService taskService;
     private final UserMapper userMapper;
     private final TaskMapper taskMapper;
@@ -34,7 +34,7 @@ public class UserController {
     @PutMapping
     @Operation(summary = "Update user")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#userDto.id)")
-    public UserDto update(@Validated(OnUpdate.class) @RequestBody UserDto userDto){
+    public UserDto update(@Validated(OnUpdate.class) @RequestBody UserDto userDto) {
         User user = userMapper.toEntity(userDto);
         User updateUser = userService.update(user);
         return userMapper.toDto(updateUser);
@@ -44,7 +44,7 @@ public class UserController {
     @GetMapping("/{id}")
     @Operation(summary = "Get userDto by id")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
-    public UserDto getById(@PathVariable Long id){
+    public UserDto getById(@PathVariable Long id) {
         User user = userService.getById(id);
         return userMapper.toDto(user);
     }
@@ -59,7 +59,7 @@ public class UserController {
     @GetMapping("/{id}/tasks")
     @Operation(summary = "Get all tasks by user id")
     @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
-    public List<TaskDto> getTasksByUserId(@PathVariable Long id){
+    public List<TaskDto> getTasksByUserId(@PathVariable Long id) {
         List<Task> tasks = taskService.getAllByUserId(id);
         return taskMapper.toDto(tasks);
     }
