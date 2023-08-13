@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TaskService {
 
-    Task getById( Long id);
+    Task getById(Long id);
 
     List<Task> getAllByUserId(Long userId);
 

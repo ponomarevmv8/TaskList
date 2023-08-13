@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class JwtEntityFactory {
 
-    public static JwtEntity create(User user){
+    public static JwtEntity create(User user) {
         return new JwtEntity(user.getId(), user.getUsername(), user.getName(), user.getPassword(), matToGrantedAuthorities(new ArrayList<>(user.getRoles())));
     }
 

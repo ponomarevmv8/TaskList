@@ -15,11 +15,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -53,7 +51,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public MethodSecurityExpressionHandler expressionHandler(){
+    public MethodSecurityExpressionHandler expressionHandler() {
         DefaultMethodSecurityExpressionHandler expressionHandler = new CustomSecurityExceptionHandler();
         expressionHandler.setApplicationContext(applicationContext);
         return expressionHandler;
@@ -68,7 +66,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public OpenAPI openAPI(){
+    public OpenAPI openAPI() {
         return new OpenAPI()
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(
@@ -89,7 +87,7 @@ public class ApplicationConfig {
 
 
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
                 .cors()

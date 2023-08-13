@@ -2,7 +2,6 @@ package ru.petproject.taskList.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.mapstruct.Mapper;
 
 import java.util.Map;
 

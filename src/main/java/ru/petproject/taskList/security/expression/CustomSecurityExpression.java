@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.petproject.taskList.entity.user.Role;
 import ru.petproject.taskList.security.JwtEntity;
@@ -16,7 +15,7 @@ public class CustomSecurityExpression {
 
     private final UserService userService;
 
-    public boolean canAccessUser(Long id){
+    public boolean canAccessUser(Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JwtEntity user = (JwtEntity) authentication.getPrincipal();
         Long userId = user.getId();
@@ -24,9 +23,9 @@ public class CustomSecurityExpression {
     }
 
     private boolean hasAnyRole(Authentication authentication, Role... roles) {
-        for (Role role: roles) {
+        for (Role role : roles) {
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-            if(authentication.getAuthorities().contains(authority)){
+            if (authentication.getAuthorities().contains(authority)) {
                 return true;
             }
         }
