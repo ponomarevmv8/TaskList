@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.petproject.taskList.entity.task.Status;
 import ru.petproject.taskList.entity.task.Task;
+import ru.petproject.taskList.entity.user.User;
 import ru.petproject.taskList.exception.ResourceNotFoundException;
 import ru.petproject.taskList.repository.TaskRepository;
 import ru.petproject.taskList.service.TaskService;
+import ru.petproject.taskList.service.UserService;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -41,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
         if (task.getStatus() == null) {
             task.setStatus(Status.TODO);
         }
-        taskRepository.update(task);
+        taskRepository.save(task);
         return task;
     }
 
@@ -49,9 +52,11 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Cacheable(value = "TaskService::getById", key = "#task.id")
     public Task create(Task task, Long userId) {
+        User user = userService.getById(userId);
         task.setStatus(Status.TODO);
-        taskRepository.create(task);
-        taskRepository.assignToUserById(task.getId(), userId);
+        user.getTask().add(task);
+        userService.update(user);
+        taskRepository.save(task);
         return task;
     }
 
@@ -59,6 +64,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @CacheEvict(value = "TaskService::getById", key = "#id")
     public void delete(Long id) {
-        taskRepository.delete(id);
+        taskRepository.deleteById(id);
     }
 }

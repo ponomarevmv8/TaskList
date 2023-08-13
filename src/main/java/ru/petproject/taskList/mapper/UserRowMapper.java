@@ -28,7 +28,7 @@ public class UserRowMapper {
             user.setUsername(rs.getString("user_username"));
             user.setPassword(rs.getString("user_password"));
             user.setRoles(roles);
-            user.setTasks(tasks);
+            user.setTask(tasks);
             return user;
         }
         return null;

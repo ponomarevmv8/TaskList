@@ -1,6 +1,7 @@
 package ru.petproject.taskList.entity.task;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -12,23 +13,21 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
+@Entity
+@Table(name = "tasks")
 public class Task implements Serializable {
 
-    @NotNull(message = "Id must be not null", groups = OnUpdate.class)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Title must be not null", groups = {OnUpdate.class, OnCreate.class})
-    @Length(max = 255, message = "Title length must be smaller than 255 symbols", groups = {OnCreate.class, OnUpdate.class})
     private String title;
 
-    @Length(max = 255, message = "Description length must be smaller than 255 symbols", groups = {OnCreate.class, OnUpdate.class})
     private String description;
 
-
+    @Enumerated(value = EnumType.STRING)
     private Status status;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime expirationDate;
 
 }
