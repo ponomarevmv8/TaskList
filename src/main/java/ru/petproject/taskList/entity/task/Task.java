@@ -1,16 +1,11 @@
 package ru.petproject.taskList.entity.task;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
-import ru.petproject.taskList.dto.validation.OnCreate;
-import ru.petproject.taskList.dto.validation.OnUpdate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,4 +25,8 @@ public class Task implements Serializable {
 
     private LocalDateTime expirationDate;
 
+    @Column(name = "image")
+    @CollectionTable(name = "tasks_images")
+    @ElementCollection()
+    private List<String> images;
 }

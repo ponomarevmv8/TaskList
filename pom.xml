@@ -27,6 +27,7 @@
         <liquibase.version>4.23.0</liquibase.version>
         <openapi.version>2.1.0</openapi.version>
         <preliquibase.version>1.4.0</preliquibase.version>
+        <minio.version>8.5.4</minio.version>
     </properties>
 
     <dependencies>
@@ -137,6 +138,13 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${openapi.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+
 
 
         <dependency>

@@ -1,6 +1,7 @@
 package ru.petproject.taskList.dto.task;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -10,6 +11,7 @@ import ru.petproject.taskList.dto.validation.OnUpdate;
 import ru.petproject.taskList.entity.task.Status;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class TaskDto {
@@ -29,5 +31,7 @@ public class TaskDto {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime expirationDate;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<String> images;
 
 }

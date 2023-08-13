@@ -1,6 +1,7 @@
 package ru.petproject.taskList.config;
 
 
+import io.minio.MinioClient;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -29,6 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ru.petproject.taskList.security.JwtTokenFilter;
 import ru.petproject.taskList.security.JwtTokenProvider;
 import ru.petproject.taskList.security.expression.CustomSecurityExceptionHandler;
+import ru.petproject.taskList.service.props.MinioProperties;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +40,7 @@ public class ApplicationConfig {
 
     private final ApplicationContext applicationContext;
     private final JwtTokenProvider tokenProvider;
+    private final MinioProperties minioProperties;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,6 +57,14 @@ public class ApplicationConfig {
         DefaultMethodSecurityExpressionHandler expressionHandler = new CustomSecurityExceptionHandler();
         expressionHandler.setApplicationContext(applicationContext);
         return expressionHandler;
+    }
+
+    @Bean
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+                .endpoint(minioProperties.getUrl())
+                .credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey())
+                .build();
     }
 
     @Bean

@@ -8,10 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.petproject.taskList.exception.AccessDeniedException;
-import ru.petproject.taskList.exception.ExceptionBody;
-import ru.petproject.taskList.exception.ResourceMappingException;
-import ru.petproject.taskList.exception.ResourceNotFoundException;
+import ru.petproject.taskList.exception.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,6 +65,12 @@ public class AdviceController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleAuthentication(AuthenticationException e){
         return new ExceptionBody("Authentication failed");
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionBody hendleImageUpload(ImageUploadException e){
+        return new ExceptionBody(e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

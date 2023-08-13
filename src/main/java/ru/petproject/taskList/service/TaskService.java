@@ -1,6 +1,7 @@
 package ru.petproject.taskList.service;
 
 import ru.petproject.taskList.entity.task.Task;
+import ru.petproject.taskList.entity.task.TaskImage;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface TaskService {
     Task create(Task task, Long userId);
 
     void delete(Long id);
+
+    void uploadImage(Long id, TaskImage taskImage);
 
 
 }
