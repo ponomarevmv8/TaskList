@@ -24,9 +24,10 @@
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <jakarta-validation.version>3.0.2</jakarta-validation.version>
         <jjwt.version>0.11.5</jjwt.version>
-        <mybatis.version>3.0.2</mybatis.version>
         <liquibase.version>4.23.0</liquibase.version>
         <openapi.version>2.1.0</openapi.version>
+        <preliquibase.version>1.4.0</preliquibase.version>
+        <minio.version>8.5.4</minio.version>
     </properties>
 
     <dependencies>
@@ -55,10 +56,10 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
 
+
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
@@ -126,10 +127,24 @@
         </dependency>
 
         <dependency>
+            <groupId>net.lbruun.springboot</groupId>
+            <artifactId>preliquibase-spring-boot-starter</artifactId>
+            <version>${preliquibase.version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${openapi.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+
 
 
         <dependency>
