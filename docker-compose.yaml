@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 volumes:
   cache:
@@ -8,23 +8,34 @@ volumes:
   minio-data:
     driver: local
 
+networks:
+  task-list-network:
+    driver: bridge
+
 services:
   app:
     build:
       context: .
     container_name: tasklist
     depends_on:
-      - db
-      - redis
-      - minio
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
     env_file:
       - .env
     ports:
       - '8080:8080'
+    networks:
+      - task-list-network
 
   db:
-    image: postgres:15.1-alpine
+    image: postgres:latest
     container_name: postgres
+    ports:
+      - '5432:5432'
     environment:
       - POSTGRES_USER=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -32,6 +43,13 @@ services:
     volumes:
       - ./src/main/resources/db-init:/docker-entrypoint-initdb.d
       - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USERNAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - task-list-network
 
   redis:
     image: redis:7.2-rc-alpine
@@ -42,6 +60,13 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
     volumes:
       - cache:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - task-list-network
 
   minio:
     image: minio/minio:latest
@@ -55,3 +80,10 @@ services:
       - '9000:9000'
     volumes:
       - minio-data:/minio
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - task-list-network
